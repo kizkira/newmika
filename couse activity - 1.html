@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>React Example</title>
+	<!--Load React from CDN -->
+	<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+	<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+</head>
+	<body>
+		<div style="background: tomato;">
+			<h4 style="color: blue;">React Js Form example</h4>
+		</div>
+		<div id="root"></div>
+		<h3 id="r">..</h3>
+
+		<script type="text/babel">
+		// Creat a componet with a form to prompt user inputs
+			function MyForm() {
+				const [name, setName] = React.useState("");
+				const [course, setCourse] = React.useState("");
+				const [location, setLocation] = React.useState("");
+
+				function handleSubmit(event) {
+					event.preventDefault();
+					alert(`Name: ${name}\nCourse: ${course}\nLocation: ${location}`);
+					document.getElementById("r").innerText = `${name} ${course} ${location}`;
+
+				}
+				return (
+					<form onSubmit={handleSubmit}>
+					<label>
+					Name:
+					<input
+					type="text"
+					value={name}
+					onChange={(e) => setName(e.target.value)}
+					/>
+					</label>
+					<br/>
+
+					<label>
+					Course:
+					<input
+					type="text"
+					value={course}
+					onChange={(e) => setCourse(e.target.value)}
+					/>
+					</label>
+					<br/>
+
+					<label>
+					Location:
+					<input
+					type="text"
+					value={location}
+					onChange={(e) => setLocation(e.target.value)}
+					/>
+					</label>
+					<br/>
+
+					<button type = "submit">Submit</button>
+					</form>
+					);
+			}
+			// Render the component t the page
+			ReactDOM.render(<MyForm />, document.getElementById("root"));
+	</script>
+	</body>
+</head>
+
+

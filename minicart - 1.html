@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!--Sample Code by: Dr.Fuentes -->
+    <title>Mini Cart Shop</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const users = ["Moe", "Kol", "Tay", "Pu"];
+        const passwords = ["uglyduck", "chicken", "fiesta", "scissor"];
+        const items = [
+            { name: "Nike Shoes", price: 300 },
+            { name: "Nike ", price: 150 },
+            { name: "Red USB", price: 20 }
+        ];
+
+        function MiniCartShop() {
+            const [username, setUsername] = React.useState("");
+            const [password, setPassword] = React.useState("");
+            const [loggedIn, setLoggedIn] = React.useState(false);
+            const [cartItems, setCartItems] = React.useState([]);
+            const [totalPrice, setTotalPrice] = React.useState(0);
+
+            function handleLogin(e) {
+                e.preventDefault();
+                if (users.includes(username) && passwords.includes(password)) {
+                    console.log(`Logged in with username ${username} and password ${password}`); 
+                    setLoggedIn(true);
+                } else { 
+                    alert("OPPS YOU ARE NOT A MEMBER OF THIS CARTSHOP"); 
+                }
+            }
+
+            function handleAddToCart(item) {
+                const newItem = { name: item.name, price: item.price };
+                setCartItems([...cartItems, newItem]); 
+                setTotalPrice(totalPrice + item.price);
+            }
+
+            return (
+                <div>
+                    {!loggedIn ? (
+                        <form onSubmit={handleLogin}>
+                            <label>
+                                Username:
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </label>
+                            <br />
+                            <label>
+                                Password:
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </label>
+                            <br />
+                            <button type="submit">Log In</button>
+                        </form>
+                    ) : (
+                        <div>
+                            <h2>Available Items</h2>
+                            <ul>
+                                {items.map((item, index) => (
+                                    <li key={index}>
+                                        {item.name} - php{item.price}{" "}
+                                        <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
+                                    </li>
+                                ))}
+                            </ul>
+                            <h2>Cart</h2>
+                            <ul>
+                                {cartItems.map((item, index) => (
+                                    <li key={index}>
+                                        {item.name} - Php{item.price}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p>Total Price: Php{totalPrice}</p>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<MiniCartShop />, document.getElementById("root"));
+    </script>
+</body>
+</html>
